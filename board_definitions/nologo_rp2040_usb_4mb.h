@@ -1,0 +1,60 @@
+/*
+ * Board definition for the Nologo RP2040 USB 4MB
+ *
+ * Flash: Winbond W25Q32JVIQ (4MB)
+ */
+
+#ifndef _BOARDS_NOLOGO_RP2040_USB_4MB_H
+#define _BOARDS_NOLOGO_RP2040_USB_4MB_H
+
+// Board identification
+#define NOLOGO_RP2040_USB_4MB
+
+// UART
+#ifndef PICO_DEFAULT_UART
+#define PICO_DEFAULT_UART 0
+#endif
+
+#ifndef PICO_DEFAULT_UART_TX_PIN
+#define PICO_DEFAULT_UART_TX_PIN 0
+#endif
+
+#ifndef PICO_DEFAULT_UART_RX_PIN
+#define PICO_DEFAULT_UART_RX_PIN 1
+#endif
+
+// WS2812 RGB LED
+#ifndef PICO_DEFAULT_WS2812_PIN
+#define PICO_DEFAULT_WS2812_PIN 22
+#endif
+
+// I2C
+#ifndef PICO_DEFAULT_I2C
+#define PICO_DEFAULT_I2C 1
+#endif
+
+#ifndef PICO_DEFAULT_I2C_SDA_PIN
+#define PICO_DEFAULT_I2C_SDA_PIN 16
+#endif
+
+#ifndef PICO_DEFAULT_I2C_SCL_PIN
+#define PICO_DEFAULT_I2C_SCL_PIN 17
+#endif
+
+// Flash
+#define PICO_BOOT_STAGE2_CHOOSE_W25Q080 1
+
+#ifndef PICO_FLASH_SPI_CLKDIV
+#define PICO_FLASH_SPI_CLKDIV 2
+#endif
+
+#ifndef PICO_FLASH_SIZE_BYTES
+#define PICO_FLASH_SIZE_BYTES (4 * 1024 * 1024)
+#endif
+
+// All boards have RP2040 B1
+#ifndef PICO_RP2040_B0_SUPPORTED
+#define PICO_RP2040_B0_SUPPORTED 0
+#endif
+
+#endif
