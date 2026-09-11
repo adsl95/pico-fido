@@ -38,8 +38,8 @@ jobs:
 
       - name: Install Nologo board definition 
         run: |
-          ${GITHUB_WORKSPACE}/board_definitions/nologo_rp2040_usb_4mb.h
-          ${GITHUB_WORKSPACE}/pico-sdk/src/boards/include/boards/nologo_rp2040_usb_4mb.h"
+          mkdir -p "${GITHUB_WORKSPACE}/pico-sdk/src/boards/include/boards"
+          cp "${GITHUB_WORKSPACE}/board_definitions/nologo_rp2040_usb_4mb.h" "${GITHUB_WORKSPACE}/pico-sdk/src/boards/include/boards/nologo_rp2040_usb_4mb.h"
 
       - name: Build Nologo RP2040 4MB
         run: |
