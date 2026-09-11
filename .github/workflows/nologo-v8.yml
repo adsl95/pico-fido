@@ -69,3 +69,4 @@ steps:
         build_nologo/*.elf
         build_nologo/*.map
       if-no-files-found: error
+      # Build test
