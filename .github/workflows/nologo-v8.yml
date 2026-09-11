@@ -1,0 +1,69 @@
+name: Build Pico FIDO v8.0 for Nologo RP2040 4MB
+
+on:
+push:
+branches:
+- nologo-4mb-v8
+workflow_dispatch:
+
+permissions:
+contents: read
+
+jobs:
+build:
+runs-on: ubuntu-latest
+
+```
+steps:
+  - name: Checkout v8.0 branch
+    uses: actions/checkout@v4
+    with:
+      ref: nologo-4mb-v8
+      submodules: recursive
+
+  - name: Install build dependencies
+    run: |
+      sudo apt-get update
+      sudo apt-get install -y \
+        cmake \
+        gcc-arm-none-eabi \
+        libnewlib-arm-none-eabi \
+        libstdc++-arm-none-eabi-newlib
+
+  - name: Get Pico SDK 2.1.1
+    run: |
+      git clone https://github.com/raspberrypi/pico-sdk.git
+      cd pico-sdk
+      git checkout tags/2.1.1
+      git submodule update --init --recursive
+
+  - name: Build Nologo RP2040 4MB
+    run: |
+      mkdir -p build_nologo
+      cd build_nologo
+
+      PICO_SDK_PATH="${GITHUB_WORKSPACE}/pico-sdk" \
+      cmake .. \
+        -DPICO_BOARD_HEADER_DIRS="${GITHUB_WORKSPACE}/board_definitions" \
+        -DPICO_BOARD=nologo_rp2040_usb_4mb
+
+      make -j$(nproc)
+
+  - name: Show generated files
+    run: |
+      echo "Generated firmware files:"
+      find "${GITHUB_WORKSPACE}/build_nologo" \
+        -type f \
+        \( -name "*.uf2" -o -name "*.elf" -o -name "*.map" \) \
+        -print
+
+  - name: Upload firmware
+    uses: actions/upload-artifact@v4
+    with:
+      name: pico-fido-v8.0-nologo-rp2040-4mb
+      path: |
+        build_nologo/*.uf2
+        build_nologo/*.elf
+        build_nologo/*.map
+      if-no-files-found: error
+```
